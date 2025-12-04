@@ -1,0 +1,15 @@
+input = "492410748-492568208,246-390,49-90,16-33,142410-276301,54304-107961,12792-24543,3434259704-3434457648,848156-886303,152-223,1303-1870,8400386-8519049,89742532-89811632,535853-567216,6608885-6724046,1985013826-1985207678,585591-731454,1-13,12067202-12233567,6533-10235,6259999-6321337,908315-972306,831-1296,406-824,769293-785465,3862-5652,26439-45395,95-136,747698990-747770821,984992-1022864,34-47,360832-469125,277865-333851,2281-3344,2841977-2953689,29330524-29523460"
+ranges = input.split(",")
+invalid = []
+
+for r in ranges:
+    # convert to int, e.g. limits = [232, 234]
+    limits = [int(n) for n in ranges[0].split("-")]
+
+    for num in range(limits[0], limits[1]):
+        print(num)
+
+    # for any range between 2 odd numbers, no invalid id exists
+    # for an even num ranges invalid id
+    # first half = second half
+    # check if greater or less than limits, add to sum

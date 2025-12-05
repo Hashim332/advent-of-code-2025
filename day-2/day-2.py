@@ -48,40 +48,38 @@ invalid = []
 res = 0
 
 for r in ranges:
-    # convert to int, e.g. limits = [232, 234]
+    # convert range to list of ints, e.g. limits = [232, 234]
     limits = [int(n) for n in r.split("-")]
 
+    # loop between the limits
     for num in range(limits[0], limits[1] + 1):
         # for each num, find all it's factors by finding 1/2 of its length and using modulo down to 1
         # split the string into chunk size = factor
         half_l = len(str(num)) // 2
         factors = []
-        # for odd nums (or even) step back from len half to 1, find all factors and store them
+
+        # find all factors of the length of nums i.e the size of repeatable chunks
         for x in range(half_l, 0, -1):
             if len(str(num)) % x == 0:
                 factors.append(x)
 
+        # factor = chunksize
         for factor in factors:
-            # starting with the biggest, check if all the substrings of this chunksize are equal
+            # divide num into a list of chunks for each factor
             chunks = [str(num)[i : i + factor] for i in range(0, len(str(num)), factor)]
-            # print(chunks)
-            # compare first chunk all the way down (if needed) and sum it up to the result
-            # for chunks:
-            # is first chunk = second ? yes:
-            # is first
-            for i in range(1, len(chunks)):
-                print(chunks[0], chunks[i])
-                if chunks[0] == chunks[i]:
-                    continue
+            # print(
+            #     f"num:{num}, len={len(str(num))}, factors of l={factors}, chunks={chunks}"
+            # )
+            # print("")
 
-        # print(f"potential factors of len of {num} = {factors}")
+            # for a list of chunks to be valid, they must all be the same so I reduce via set()
+            if len(set(chunks)) == 1:
+                # if len(str(num)) < 4:
+                #     print(f"num: {num}, invalid:{chunks} & res:{res}")
+                print(f"num: {num}, invalid:{chunks} & res:{res}")
+                res += num
+                break
+                print("updated res = ", res)
+                print("")
 
-        first_half = str(num)[0:half_l]
-        second_half = str(num)[half_l:]
-
-        if first_half == second_half:
-            # print(first_half, second_half)
-            # print(num)
-            res += num
-
-    # print(res)
+print(res)

@@ -1,4 +1,5 @@
-INPUT = """2712233521522212239633525221424223292522332923342263323223226223332531222232333293222213262324223122
+INPUT = """
+2712233521522212239633525221424223292522332923342263323223226223332531222232333293222213262324223122
 6443848847769438847664244676354493684774344514352544147447353899987328644494647946726462934543554474
 3332433333233333633323332331333325311333423333343552333343435324242433322332243454433334433332333241
 6534444453544144554565453444455534444525545454555544534444654445544543445544455555444224441534555454
@@ -206,29 +207,50 @@ INPUT = """271223352152221223963352522142422329252233292334226332322322622333253
 # loop from biggest -> end
 # return biggest + second_biggest
 
+# nums = INPUT.split("\n")
+# res = 0
+# for num in nums:
+#     if len(num) < 2:  # Skip empty or single-character strings
+#         continue
+#     largest = max(num[:-1])  # getting largest of n-1 of string
+#     largest_index = num.index(largest)
+#     second_largest = max(num[largest_index + 1 :])
+#     res += int(largest + second_largest)
+# print(res)
+
+
+# pt 2
 nums = INPUT.split("\n")
 res = 0
+joltage = ""
 for num in nums:
-    # find largest
-    largest = num[0]
+    # in num, search in the first n - 12 digits for the biggest
+    # after that's found, add to biggest using its index
+    # start again but this time search from index of biggest to n - (12 - len(biggest)) num[index:n-(12-len(biggest))]
+    # each time we add a number to biggest, we "unlock" more of the end of our range while losing some of the start of it
 
-    for i in range(len(num) - 1):  # goes from 0 -> 2nd last val
-        if int(num[i]) > int(largest):
-            largest = num[i]
-            # print(largest, "i = ", i)
-            # print("len = ", len(num))
+    if len(num) < 2:  # Skip empty or single-character strings
+        continue
 
-    # 742535636654337746365868 3536752333744332
-    # for j in range(index of largest, end)
+    index = None
+    for i in range(12):
+        if index is None:
+            biggest_num = max(num[:-12])  # getting largest of n-1 of string
+            print(biggest_num)
+            index = num.index(biggest_num)
+        else:
+            print("hello")
+            biggest_num = max(
+                num[index + 1 : (-12 + i)]
+            )  # getting largest of n-1 of string
+            print(num)
+            print(num[index + 1 : (-12 + i)])
+            print(biggest_num)
+            index = num.index(biggest_num)
 
-    second = num[num.index(str(largest)) + 1]  # bruh
-
-    for j in range(num.index(str(largest)) + 1, len(num)):
-        # print(j)
-        # print(second)
-        if int(num[j]) > int(second):
-            second = num[j]
-
-    print(largest + second)
-    res += int(largest + second)
-    print(res)
+        # print(f"loop =, {i}, biggest = {biggest_num}, index = {index}")
+        print("")
+        joltage += biggest_num
+    print(joltage)
+    break
+    joltage = ""

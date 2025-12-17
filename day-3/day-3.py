@@ -1,5 +1,4 @@
-INPUT = """
-2712233521522212239633525221424223292522332923342263323223226223332531222232333293222213262324223122
+INPUT = """2712233521522212239633525221424223292522332923342263323223226223332531222232333293222213262324223122
 6443848847769438847664244676354493684774344514352544147447353899987328644494647946726462934543554474
 3332433333233333633323332331333325311333423333343552333343435324242433322332243454433334433332333241
 6534444453544144554565453444455534444525545454555544534444654445544543445544455555444224441534555454
@@ -200,6 +199,7 @@ INPUT = """
 7425356366543377463658683536752333744332473885355734632243738454554227345265537436343534476686523374
 3322443333432323234422242432523223322422243343331431224244233442143534231422213522432133222452222242"""
 
+
 # 81818191111211 1
 
 # loop through all nums except last
@@ -220,37 +220,98 @@ INPUT = """
 
 
 # pt 2
+# nums = INPUT.split("\n")
+# res = 0
+# joltage = ""
+# for num in nums:
+#     # in num, search in the first n - 12 digits for the biggest
+#     # after that's found, add to biggest using its index
+#     # start again but this time search from index of biggest to n - (12 - len(biggest)) num[index:n-(12-len(biggest))]
+#     # each time we add a number to biggest, we "unlock" more of the end of our range while losing some of the start of it
+
+#     if len(num) < 2:  # Skip empty or single-character strings
+#         continue
+
+#     index = None
+#     for i in range(12):
+#         if index is None:
+#             biggest_num = max(num[:-12])  # getting largest of n-1 of string
+#             print(biggest_num)
+#             index = num.index(biggest_num)
+#         else:
+#             print("hello")
+#             available_range = num[index + 1 : (-12 + i)]
+#             biggest_num = max(available_range)  # getting largest of n-1 of string
+#             print(num)
+#             print(available_range)
+#             print(f"biggest = {biggest_num}, index = {index}")
+#             index = available_range.index(biggest_num)
+
+#         # print(f"loop = {i}, biggest = {biggest_num}, index = {index}")
+#         print("")
+#         joltage += biggest_num
+#     # print(joltage)
+#     break
+#     joltage = ""
+
 nums = INPUT.split("\n")
+
 res = 0
 joltage = ""
+count = 0
 for num in nums:
-    # in num, search in the first n - 12 digits for the biggest
-    # after that's found, add to biggest using its index
-    # start again but this time search from index of biggest to n - (12 - len(biggest)) num[index:n-(12-len(biggest))]
-    # each time we add a number to biggest, we "unlock" more of the end of our range while losing some of the start of it
+    first = max(num[:-11])
+    index_1 = num.index(first)
 
-    if len(num) < 2:  # Skip empty or single-character strings
-        continue
+    second = max(num[index_1 + 1 : -10])
+    index_2 = num[index_1 + 1 :].index(second) + index_1 + 1
 
-    index = None
-    for i in range(12):
-        if index is None:
-            biggest_num = max(num[:-12])  # getting largest of n-1 of string
-            print(biggest_num)
-            index = num.index(biggest_num)
-        else:
-            print("hello")
-            biggest_num = max(
-                num[index + 1 : (-12 + i)]
-            )  # getting largest of n-1 of string
-            print(num)
-            print(num[index + 1 : (-12 + i)])
-            print(biggest_num)
-            index = num.index(biggest_num)
+    third = max(num[index_2 + 1 : -9])
+    index_3 = num[index_2 + 1 :].index(third) + index_2 + 1
 
-        # print(f"loop =, {i}, biggest = {biggest_num}, index = {index}")
-        print("")
-        joltage += biggest_num
+    fourth = max(num[index_3 + 1 : -8])
+    index_4 = num[index_3 + 1 :].index(fourth) + index_3 + 1
+
+    fifth = max(num[index_4 + 1 : -7])
+    index_5 = num[index_4 + 1 :].index(fifth) + index_4 + 1
+
+    sixth = max(num[index_5 + 1 : -6])
+    index_6 = num[index_5 + 1 :].index(sixth) + index_5 + 1
+
+    seventh = max(num[index_6 + 1 : -5])
+    index_7 = num[index_6 + 1 :].index(seventh) + index_6 + 1
+
+    eigth = max(num[index_7 + 1 : -4])
+    index_8 = num[index_7 + 1 :].index(eigth) + index_7 + 1
+
+    ninth = max(num[index_8 + 1 : -3])
+    index_9 = num[index_8 + 1 :].index(ninth) + index_8 + 1
+
+    tenth = max(num[index_9 + 1 : -2])
+    index_10 = num[index_9 + 1 :].index(tenth) + index_9 + 1
+
+    eleventh = max(num[index_10 + 1 : -1])
+    index_11 = num[index_10 + 1 :].index(eleventh) + index_10 + 1
+
+    twelveth = max(num[index_11 + 1 :])
+    index_12 = num[index_11 + 1 :].index(twelveth) + index_11 + 1
+
+    joltage = (
+        first
+        + second
+        + third
+        + fourth
+        + fifth
+        + sixth
+        + seventh
+        + eigth
+        + ninth
+        + tenth
+        + eleventh
+        + twelveth
+    )
+
     print(joltage)
-    break
-    joltage = ""
+    res += int(joltage)
+
+print("res =", res)
